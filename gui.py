@@ -74,6 +74,9 @@ class MouseMoverGUI:
             self.root.after(0, self.stop)
 
     def _loop(self, distance, delay):
+        # start from the middle of the monitor
+        screen_w, screen_h = pyautogui.size()
+        pyautogui.moveTo(screen_w // 2, screen_h // 2, duration=0.2)
         while not self.stop_event.is_set():
             pyautogui.moveRel(distance, 0, duration=0.2)   # right
             if self.stop_event.wait(delay):
@@ -109,6 +112,8 @@ class MouseMoverGUI:
 
     def center_window(self):
         """Place the window in the middle of the screen."""
+        # hide while we compute geometry so it doesn't flash at the top-left
+        self.root.withdraw()
         self.root.update_idletasks()  # ensure the window size is calculated
         w = self.root.winfo_width()
         h = self.root.winfo_height()
@@ -117,6 +122,7 @@ class MouseMoverGUI:
         x = (screen_w - w) // 2
         y = (screen_h - h) // 2
         self.root.geometry(f"+{x}+{y}")
+        self.root.deiconify()  # show it, already positioned
 
     def on_close(self):
         self.stop_event.set()
