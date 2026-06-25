@@ -49,17 +49,10 @@ def main():
     parser.add_argument("--distance", type=int, default=config.DEFAULT_DISTANCE, help="pixels to move")
     parser.add_argument("--delay", type=float, default=config.DEFAULT_DELAY, help="seconds between moves")
     parser.add_argument("--count", type=int, default=config.DEFAULT_COUNT, help="cycles, 0 = forever")
-    parser.add_argument("--center", action="store_true", help="move cursor to screen center before starting")
     args = parser.parse_args()
 
     # let the mouse move freely; disable the corner fail-safe
     pyautogui.FAILSAFE = False
-
-    # optionally start from the middle of the monitor
-    if args.center:
-        width, height = pyautogui.size()
-        pyautogui.moveTo(width // 2, height // 2, duration=0.2)
-        print(f"Centered cursor at {width // 2}, {height // 2}")
 
     # listen for ESC / right-click in the background (daemon so we can exit)
     key_listener = keyboard.Listener(on_press=_on_key)

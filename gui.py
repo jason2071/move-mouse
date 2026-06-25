@@ -60,14 +60,10 @@ class MouseMoverGUI:
         self.stop_btn = ttk.Button(frame, text="Stop", command=self.stop, state="disabled")
         self.stop_btn.grid(row=2, column=1, pady=(12, 0), sticky="ew")
 
-        # center button
-        self.center_btn = ttk.Button(frame, text="Center cursor", command=self.center)
-        self.center_btn.grid(row=3, column=0, columnspan=2, pady=(4, 0), sticky="ew")
-
         # status
         self.status = tk.StringVar(value="Idle")
         ttk.Label(frame, textvariable=self.status, foreground="gray").grid(
-            row=4, column=0, columnspan=2, pady=(12, 0)
+            row=3, column=0, columnspan=2, pady=(12, 0)
         )
 
         root.protocol("WM_DELETE_WINDOW", self.on_close)
@@ -76,11 +72,6 @@ class MouseMoverGUI:
         # called from the pynput thread; hand off to the Tk main thread
         if key == keyboard.Key.esc:
             self.root.after(0, self.stop)
-
-    def center(self):
-        width, height = pyautogui.size()
-        pyautogui.moveTo(width // 2, height // 2, duration=0.2)
-        self.status.set(f"Centered at {width // 2}, {height // 2}")
 
     def _loop(self, distance, delay):
         while not self.stop_event.is_set():
@@ -116,6 +107,17 @@ class MouseMoverGUI:
         self.stop_btn.config(state="disabled")
         self.status.set("Stopped")
 
+    def center_window(self):
+        """Place the window in the middle of the screen."""
+        self.root.update_idletasks()  # ensure the window size is calculated
+        w = self.root.winfo_width()
+        h = self.root.winfo_height()
+        screen_w = self.root.winfo_screenwidth()
+        screen_h = self.root.winfo_screenheight()
+        x = (screen_w - w) // 2
+        y = (screen_h - h) // 2
+        self.root.geometry(f"+{x}+{y}")
+
     def on_close(self):
         self.stop_event.set()
         self.key_listener.stop()
@@ -125,6 +127,7 @@ class MouseMoverGUI:
 def main():
     root = tk.Tk()
     app = MouseMoverGUI(root)
+    app.center_window()
 
     # let Ctrl+C in the terminal close the program cleanly
     signal.signal(signal.SIGINT, lambda *_: app.on_close())
