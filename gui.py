@@ -49,7 +49,7 @@ class MouseMoverGUI:
 
         # delay
         ttk.Label(frame, text="Delay (s)").grid(row=1, column=0, sticky="w", pady=4)
-        self.delay = tk.DoubleVar(value=0.5)
+        self.delay = tk.DoubleVar(value=3)
         ttk.Entry(frame, textvariable=self.delay, width=10).grid(row=1, column=1, pady=4)
 
         # buttons
