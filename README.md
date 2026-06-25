@@ -6,12 +6,13 @@ Move the mouse cursor left and right repeatedly. Useful for keeping a machine aw
 
 - Python 3
 - [pyautogui](https://pyautogui.readthedocs.io/)
+- [pynput](https://pynput.readthedocs.io/)
 
 ## Setup
 
 ```bash
 uv venv
-uv pip install pyautogui
+uv pip install pyautogui pynput
 ```
 
 > On macOS, grant Accessibility permission the first time:
@@ -41,9 +42,9 @@ python move-mouse.py
 ### Examples
 
 ```bash
-python move_mouse.py                            # default, runs forever
-python move_mouse.py --distance 300 --delay 1   # bigger steps, slower
-python move_mouse.py --count 10                 # stop after 10 cycles
+python move-mouse.py                            # default, runs forever
+python move-mouse.py --distance 300 --delay 1   # bigger steps, slower
+python move-mouse.py --count 10                 # stop after 10 cycles
 ```
 
-Stop anytime with `Ctrl+C`.
+Stop anytime with **ESC**, **right-click**, or `Ctrl+C`.
