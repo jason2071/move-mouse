@@ -8,12 +8,16 @@ Usage:
     --delay     seconds between each move (default 0.5)
     --count     number of left-right cycles, 0 = forever (default 0)
 
+Defaults can also come from environment variables or a .env file:
+    MOVE_DISTANCE, MOVE_DELAY, MOVE_COUNT (CLI args take precedence).
+
 Stop with ESC, right-click, or Ctrl+C.
 """
 import argparse
 import sys
 import threading
-import time
+
+import config
 
 try:
     import pyautogui
@@ -42,9 +46,9 @@ def _on_click(_x, _y, button, pressed):
 
 def main():
     parser = argparse.ArgumentParser(description="Move mouse left and right")
-    parser.add_argument("--distance", type=int, default=200, help="pixels to move")
-    parser.add_argument("--delay", type=float, default=3, help="seconds between moves")
-    parser.add_argument("--count", type=int, default=0, help="cycles, 0 = forever")
+    parser.add_argument("--distance", type=int, default=config.DEFAULT_DISTANCE, help="pixels to move")
+    parser.add_argument("--delay", type=float, default=config.DEFAULT_DELAY, help="seconds between moves")
+    parser.add_argument("--count", type=int, default=config.DEFAULT_COUNT, help="cycles, 0 = forever")
     args = parser.parse_args()
 
     # let the mouse move freely; disable the corner fail-safe

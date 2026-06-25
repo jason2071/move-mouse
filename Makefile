@@ -9,7 +9,7 @@ help: ## Show this help
 
 setup: ## Create venv and install dependencies
 	uv venv
-	$(PIP) install pyautogui pynput
+	$(PIP) install pyautogui pynput python-dotenv
 
 run: ## Run the CLI mouse mover (use ARGS="--distance 300")
 	$(PYTHON) move-mouse.py $(ARGS)

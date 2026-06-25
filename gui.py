@@ -10,6 +10,8 @@ import threading
 import tkinter as tk
 from tkinter import ttk
 
+import config
+
 try:
     import pyautogui
 except ImportError:
@@ -44,12 +46,12 @@ class MouseMoverGUI:
 
         # distance
         ttk.Label(frame, text="Distance (px)").grid(row=0, column=0, sticky="w", pady=4)
-        self.distance = tk.IntVar(value=200)
+        self.distance = tk.IntVar(value=config.DEFAULT_DISTANCE)
         ttk.Entry(frame, textvariable=self.distance, width=10).grid(row=0, column=1, pady=4)
 
         # delay
         ttk.Label(frame, text="Delay (s)").grid(row=1, column=0, sticky="w", pady=4)
-        self.delay = tk.DoubleVar(value=3)
+        self.delay = tk.DoubleVar(value=config.DEFAULT_DELAY)
         ttk.Entry(frame, textvariable=self.delay, width=10).grid(row=1, column=1, pady=4)
 
         # buttons

@@ -12,6 +12,9 @@ dist/
 venv/
 env/
 
+# Local env file (keep .env.example tracked)
+.env
+
 # Editor
 .vscode/
 .idea/
